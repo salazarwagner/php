@@ -3,29 +3,85 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Conta;
 
 class ContaController extends Controller
 {
-    public function index() 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $contas = Conta::all();
-        return response()->json($contas);
+        return Conta::all();
     }
 
-    public function show($id)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $conta = Conta::find($id);
+        //
+    }
 
-        if(!$conta) {
-            return response()->json([
-                'message'   => 'Conta não encontrada.',
-            ], 404);
-        }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        return Conta::create($request->all());
+    }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {   
+        return Conta::with('categoria')->find($id);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Conta $conta)
+    {
+        return $conta;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Conta $conta)
+    {
+        $conta->update($request->all());
+        return $conta;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Conta $conta)
+    {
+        $conta->delete();    
         return response()->json($conta);
-    }    
-
-  
+    }
 }

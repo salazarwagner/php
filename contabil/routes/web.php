@@ -15,21 +15,13 @@ use App\Conta;
 use App\Categoria;
 
 Route::get('/', function () {
-    //return redirect('api');
-    return view('welcome')->with('name', 'World');
+    return redirect('api');
 });
 
 Route::group(array('prefix' => 'api'), function() {
-  Route::get('/', function () {
-      return response()->json(['message' => 'Contabil REST API', 'status' => 'Connected']);;
-  });
-  Route::resource('conta', 'ContaController');
-  Route::resource('categoria', 'CategoriaController');
+  Route::resource('contas', 'ContaController');
+  Route::resource('categorias', 'CategoriaController');
 });
-
-
-Route::post('/teste','CategoriaController@store');
-
 
 
 

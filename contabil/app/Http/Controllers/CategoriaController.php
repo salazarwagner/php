@@ -2,70 +2,86 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Categoria;
+use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
-
-    public function __construct()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $this->middleware('auth')->except(['index', 'show', 'store']);
+        return Categoria::all();
     }
 
-    public function index() 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $categorias = Categoria::all();
-        return response()->json($categorias);
+        //
     }
 
-    
-    public function show($id)
-    {
-        $categoria = Categoria::find($id);
-
-        if(!$categoria) {
-            return response()->json([
-                'message'   => 'Categoria não encontrada.',
-            ], 404);
-        }
-
-        return response()->json($categoria);
-    }  
-
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $categoria = new Categoria();
-        //$categoria->fill($request->all());
-        //$categoria->save();
+        return Categoria::create($request->all());
+    }
 
-        //return response()->json($categoria, 201);
-        return view('welcome')->with('name', 'World');
-    }      
-    
-    
-    public function destroy($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Categoria  $categoria
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Categoria $categoria)
     {
-        return response()->json([
-            'message'   => 'Categoria excluída.',
-            ], 201);
-        
-        /*
+        return $categoria;
+    }
 
-        $categoria = Categoria::destroy($id);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Categoria  $categoria
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Categoria $categoria)
+    {
+        return $categoria;
+    }
 
-        if(!$categoria) {
-            return response()->json([
-                'message'   => 'Categoria não encontrada.',
-            ], 404);
-        }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Categoria  $categoria
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Categoria $categoria)
+    {
+        $categoria->update($request->all());
+        return $categoria;
+    }
 
-        return response()->json([
-            'message'   => 'Categoria excluída.',
-            ], 201);
-        
-        */
-    } 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Categoria  $categoria
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Categoria $categoria)
+    {
+        $categoria->delete();    
+        return response()->json($categoria);
+    }
 }
-    

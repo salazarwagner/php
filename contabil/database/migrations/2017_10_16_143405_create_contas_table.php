@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\User;
+use App\Conta;
+use App\Categoria;
 
 class CreateContasTable extends Migration
 {
@@ -32,7 +35,6 @@ class CreateContasTable extends Migration
         Schema::table('contas', function($table) {
             $table->foreign('id_categoria')->references('id')->on('categorias');
         });
-
     }
 
     /**
